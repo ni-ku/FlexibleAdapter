@@ -3319,13 +3319,15 @@ public class FlexibleAdapter<T extends IFlexible>
         // Check if list is empty
         if (selectedPositions == null || selectedPositions.isEmpty()) return;
         // Reverse-sort the list, start from last position for efficiency
-        Collections.sort(selectedPositions, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer lhs, Integer rhs) {
-                return rhs - lhs;
-            }
-        });
-        log.v("removeItems after reverse sort selectedPositions=%s", selectedPositions);
+        if (selectedPositions.size() >= 2) {
+            Collections.sort(selectedPositions, new Comparator<Integer>() {
+                @Override
+                public int compare(Integer lhs, Integer rhs) {
+                    return rhs - lhs;
+                }
+            });
+            log.v("removeItems after reverse sort selectedPositions=%s", selectedPositions);
+        }
         // Split the list in ranges
         int positionStart = 0, itemCount = 0;
         int lastPosition = selectedPositions.get(0);
